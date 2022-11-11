@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'expenses',
     'income',
-    # 'corsheaders'
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -61,8 +61,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    # "corsheaders.middleware.CorsMiddleware",
-    # "django.middleware.common.CommonMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = 'incomeExpenseAPI.urls'
@@ -170,13 +170,4 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1)
 }
 
-# CORS_ALLOWED_ORIGINS = [
-#     "https://example.com",
-#     "https://sub.example.com",
-#     "http://localhost:8080",
-#     "http://127.0.0.1:9000",
-# ]
-
-# CORS_ALLOWED_ORIGIN_REGEXES = [
-#     r"^https://\w+\.example\.com$",
-# ]
+CORS_ORIGIN_ALLOW_ALL = True
