@@ -13,6 +13,7 @@ from django.utils.http import (
     urlsafe_base64_decode,
     urlsafe_base64_encode
 )
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -51,7 +52,16 @@ class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255, min_length=3)
     password = serializers.CharField(max_length=68, min_length=6, write_only=True)
     username = serializers.CharField(max_length=255, min_length=3, read_only=True)
-    tokens = serializers.CharField(max_length=255, min_length=3, read_only=True)
+    tokens = serializers.SerializerMethodField()
+
+    def get_tokens(self, obj):
+        user = User.objects.get(email=obj['email'])
+
+        return {
+            'access':user.tokens()['access'],
+            'refresh':user.tokens()['refresh'],
+        }
+    
 
     class Meta:
         model = User
@@ -115,3 +125,22 @@ class SetNewPasswordSerializer(serializers.Serializer):
 
         return super().validate(attrs)
 
+class LogoutSerializer(serializers.Serializer):
+    refresh  = serializers.CharField()
+
+    default_error_messages = {
+        'bad_token':''
+    }
+
+    def validate(self, attrs):
+        # print(attrs)
+        self.token = attrs['refresh']
+        return attrs
+    
+    def save(self, **kwargs):
+        try:
+
+            RefreshToken(self.token).blacklist()
+        
+        except TokenError as e:
+            self.fail('bad_token')

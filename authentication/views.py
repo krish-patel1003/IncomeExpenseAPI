@@ -5,7 +5,8 @@ from .serializers import (
     EmailVerificationSerializer,
     LoginSerializer,
     ResetPasswordEmailRequestSerializer,
-    SetNewPasswordSerializer
+    SetNewPasswordSerializer,
+    LogoutSerializer
 )
 from rest_framework.response import Response
 from rest_framework import status
@@ -31,7 +32,7 @@ from django.utils.http import (
     urlsafe_base64_decode,
     urlsafe_base64_encode
 )
-
+from rest_framework.permissions import IsAuthenticated
 
 
 class RegisterView(generics.GenericAPIView):
@@ -188,3 +189,14 @@ class SetNewPasswordAPIView(generics.GenericAPIView):
             },
             status=status.HTTP_200_OK
         )
+
+
+class LogoutAPIView(generics.GenericAPIView):
+    serializer_class = LogoutSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'mssg': 'user logged out'}, status=status.HTTP_204_NO_CONTENT)
