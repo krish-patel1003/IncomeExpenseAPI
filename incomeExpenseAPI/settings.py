@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
+import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -30,7 +31,7 @@ SECRET_KEY = 'django-insecure-9!ow&#c-q4qj9_92vm6c$)^9ol-^)0xfvec!&x%i&)hfrw!y&e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['web-production-5de3.up.railway.app', '127.0.0.1:1']
 
 
 # Application definition
@@ -100,9 +101,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': '7T9JgpVYOuRAZAkkhTaO',
-        'HOST': 'containers-us-west-125.railway.app',
-        'PORT': '7688',
+        'PASSWORD': 'Hgexp1TMelBrEsYJRHeG',
+        'HOST': 'containers-us-west-119.railway.app',
+        'PORT': '6041',
     }
 }
 
