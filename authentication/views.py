@@ -206,7 +206,7 @@ class AuthUserAPIView(generics.GenericAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        user = User.objects.get(pk=request.user.pk.pk.pj)
+        user = User.objects.get(pk=request.user.pk)
         serializer = RegisterSerializer
 
         return Response(serializer.data)
