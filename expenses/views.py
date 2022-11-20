@@ -10,7 +10,8 @@ from .permissions import IsOwner
 class ExpenseListAPIView(ListCreateAPIView):
     serializer_class = ExpenseSerializer
     queryset = Expense.objects.all()
-    permission_classes = (IsAuthenticated, )
+    # permission_classes = (IsAuthenticated, )
+    authentication_classes = []
 
     def perform_create(self, serializer):
         return serializer.save(owner=self.request.user)
